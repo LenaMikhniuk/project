@@ -3,21 +3,14 @@ import 'package:this_is_project/domain/repositories/auth/auth.dart';
 
 class AuthImpl implements Auth {
   @override
-  bool logOut() {
+  Future<bool> logOut() async {
+    await Future.delayed(const Duration(milliseconds: 400));
     return true;
   }
 
   @override
-  User? login() {
-    if (isValidatedUser()) {
-      return User(email: '', id: 1, name: '');
-    } else {
-      return null;
-    }
-  }
-
-  @override
-  bool isValidatedUser() {
-    return true;
+  Future<User> login() async {
+    await Future.delayed(const Duration(milliseconds: 400));
+    return User(name: 'Ola', email: 'ola123', id: 1);
   }
 }
