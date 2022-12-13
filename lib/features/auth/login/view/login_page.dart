@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:this_is_project/domain/models/auth_model/user.dart';
+import 'package:go_router/go_router.dart';
 import 'package:this_is_project/domain/repositories/auth/auth.dart';
 
 import '../../../features.dart';
@@ -12,7 +12,7 @@ class AuthPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => LoginPageCubit(
-        AuthImpl(),
+        MockAuthImpl(),
       ),
       child: const AuthPageView(),
     );
@@ -27,11 +27,9 @@ class AuthPageView extends StatelessWidget {
     return BlocConsumer<LoginPageCubit, LoginPageState>(
       listener: (context, state) {
         if (state.status == Status.success) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => const HomePage(),
-            ),
-          );
+          context.go('/home');
+        } else if (state.status == Status.logout) {
+          context.go('/login');
         }
       },
       builder: (context, state) {

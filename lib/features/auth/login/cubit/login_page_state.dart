@@ -5,6 +5,7 @@ enum Status {
   loading,
   success,
   error,
+  logout,
 }
 
 class LoginPageState extends Equatable {
@@ -26,6 +27,9 @@ class LoginPageState extends Equatable {
 
   factory LoginPageState.error() {
     return const LoginPageState._(Status.error);
+  }
+  factory LoginPageState.logout() {
+    return const LoginPageState._(Status.logout);
   }
 
   final Status status;
