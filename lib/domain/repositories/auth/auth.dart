@@ -1,5 +1,3 @@
-import 'package:this_is_project/domain/models/models.dart';
-
 abstract class Auth {
   Future<String> login({required String name, required String password});
   Future<bool> logOut();

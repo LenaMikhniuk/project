@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:this_is_project/domain/repositories/auth/auth.dart';
+import 'package:this_is_project/features/common_widgets/auth_form.dart';
 
 import '../../../features.dart';
 
@@ -41,14 +42,14 @@ class AuthPageView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _AuthForm(
+                  AuthForm(
                     label: 'Enter a username',
                     onChanged: (value) {
                       context.read<LoginPageCubit>().onNameChanged(value);
                     },
                   ),
                   const SizedBox(height: 16),
-                  _AuthForm(
+                  AuthForm(
                     label: 'Enter your password',
                     onChanged: (value) {
                       context.read<LoginPageCubit>().onPasswordChanged(value);
@@ -56,10 +57,16 @@ class AuthPageView extends StatelessWidget {
                   ),
                   const SizedBox(height: 30),
                   ElevatedButton(
-                      onPressed: () {
-                        context.read<LoginPageCubit>().login();
-                      },
-                      child: const Text('Login!'))
+                    onPressed: () {
+                      context.read<LoginPageCubit>().login();
+                    },
+                    child: const Text('Login!'),
+                  ),
+                  const SizedBox(height: 32),
+                  TextButton(
+                    child: Text('Sign up'.toUpperCase()),
+                    onPressed: () => context.push('/register'),
+                  )
                 ],
               ),
             ),
@@ -68,30 +75,6 @@ class AuthPageView extends StatelessWidget {
           return const SizedBox();
         }
       },
-    );
-  }
-}
-
-class _AuthForm extends StatelessWidget {
-  final String label;
-  final void Function(String)? onChanged;
-
-  const _AuthForm({
-    required this.label,
-    required this.onChanged,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      onChanged: onChanged,
-      decoration: InputDecoration(
-        label: Text(label),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
     );
   }
 }

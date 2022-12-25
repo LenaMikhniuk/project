@@ -9,20 +9,20 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: BlocConsumer<AuthCubit, AuthState>(
-          listener: (context, state) {
-            if (state.status == AuthStatus.logout) {
-              context.go('/auth');
-            }
-          },
-          builder: (context, state) {
-            return ElevatedButton(
+      body: BlocConsumer<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state.status == AuthStatus.logout) {
+            context.go('/auth');
+          }
+        },
+        builder: (context, state) {
+          return Center(
+            child: ElevatedButton(
               child: const Text('Logout'),
               onPressed: () => context.read<AuthCubit>().logout(),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

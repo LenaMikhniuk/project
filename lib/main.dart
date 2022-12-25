@@ -9,20 +9,26 @@ void main() {
   runApp(const MyApp());
 }
 
-final GoRouter _router = GoRouter(routes: <RouteBase>[
-  GoRoute(
-    path: '/',
-    builder: (context, state) => const SplashScreen(),
-  ),
-  GoRoute(
-    path: '/auth',
-    builder: (context, state) => const AuthPage(),
-  ),
-  GoRoute(
-    path: '/home',
-    builder: (context, state) => const HomePage(),
-  )
-]);
+final GoRouter _router = GoRouter(
+  routes: <RouteBase>[
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const SplashScreen(),
+    ),
+    GoRoute(
+      path: '/auth',
+      builder: (context, state) => const AuthPage(),
+    ),
+    GoRoute(
+      path: '/register',
+      builder: (context, state) => const RegisterPage(),
+    ),
+    GoRoute(
+      path: '/home',
+      builder: (context, state) => const HomePage(),
+    ),
+  ],
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -32,7 +38,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthCubit(MockAuthImpl()),
-      child: MaterialApp.router(routerConfig: _router),
+      child: MaterialApp.router(
+        routerConfig: _router,
+      ),
     );
   }
 }

@@ -16,8 +16,6 @@ class LoginPageCubit extends Cubit<LoginPageState> {
     try {
       final token = await _authImpl.login(name: state.name, password: state.password);
       storage.write(key: 'user_token', value: token);
-      final c = await storage.containsKey(key: 'user_token');
-      print(c);
       emit(LoginPageState.success());
     } catch (_) {
       emit(LoginPageState.error());
