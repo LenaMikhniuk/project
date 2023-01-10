@@ -1,9 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:this_is_project/components/colors/app_colors.dart';
+import 'package:this_is_project/components/dimens/app_dimens.dart';
 import 'package:this_is_project/domain/repositories/register/register.dart';
-import 'package:this_is_project/features/common_widgets/auth_form.dart';
+import 'package:this_is_project/components/common_widgets/auth_form.dart';
 import 'package:this_is_project/features/features.dart';
+import 'package:this_is_project/translations/locale_keys.g.dart';
 
 const _minPasswordLenght = 3;
 const _mandatoryCharacters = {'#', '\$', '%', '&', '*', '!'};
@@ -27,6 +31,8 @@ class RegisterPageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final verticalPadding = MediaQuery.of(context).size.width / 2;
+
     return BlocConsumer<RegisterCubit, RegisterState>(
       listener: (context, state) {
         if (state.status == RegisterStateStatus.success) {
@@ -35,41 +41,42 @@ class RegisterPageContent extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: Colors.amber.shade100,
           appBar: AppBar(
+            backgroundColor: AppColors.scaffoldBackgroundColor,
             elevation: 0,
-            backgroundColor: Colors.amber.shade100,
-            leading: const BackButton(color: Colors.indigo),
+            leading: const BackButton(color: AppColors.buttonColor),
           ),
           body: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 85, horizontal: 25),
+            padding: EdgeInsets.symmetric(
+              vertical: verticalPadding,
+              horizontal: AppDimens.l,
+            ),
             child: Column(
               children: [
                 AuthForm(
-                  label: 'Your username'.toUpperCase(),
+                  label: LocaleKeys.username.tr().toUpperCase(),
                   onChanged: (value) => context.read<RegisterCubit>().onNameChanged(value),
-                  style: const TextStyle(color: Colors.indigo),
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: AppDimens.m),
                 Form(
                   key: _formKey,
                   child: AuthForm(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'please Enter your password';
+                        return LocaleKeys.emptyPassword.tr();
                       } else if (value.length < _minPasswordLenght) {
-                        return 'Your password should be longer!';
+                        return LocaleKeys.shortPassword.tr();
                       } else if (!_containsMandatoryCharacters(value)) {
-                        return 'Your password should contain specific characters';
+                        return LocaleKeys.noSpecificChatacters.tr();
                       } else {
                         return null;
                       }
                     },
-                    label: 'Your password'.toUpperCase(),
+                    label: LocaleKeys.password.tr().toUpperCase(),
                     onChanged: (value) => context.read<RegisterCubit>().onPasswordChanged(value),
-                    style: const TextStyle(color: Colors.indigo),
                     obscureText: state.hidePassword,
                     suffixIcon: IconButton(
+                      color: AppColors.prymaryTextColor,
                       icon: Icon(
                         state.hidePassword ? Icons.visibility : Icons.visibility_off,
                       ),
@@ -77,7 +84,7 @@ class RegisterPageContent extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 45),
+                const SizedBox(height: AppDimens.xl),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
@@ -85,7 +92,8 @@ class RegisterPageContent extends StatelessWidget {
                     }
                   },
                   child: Text(
-                    'sign up!'.toUpperCase(),
+                    LocaleKeys.signUp.tr().toUpperCase(),
+                    style: const TextStyle(color: AppColors.lightTextColor),
                   ),
                 ),
               ],

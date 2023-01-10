@@ -17,8 +17,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthState.loading());
       await _authImpl.logOut();
       storage.delete(key: 'user-token');
-      final contains = await storage.containsKey(key: 'user-token');
-      print(contains);
+      await storage.containsKey(key: 'user-token');
 
       emit(AuthState.logout());
     } catch (_) {

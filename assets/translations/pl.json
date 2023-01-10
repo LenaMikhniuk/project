@@ -1,0 +1,19 @@
+{
+    
+    "username":"Your username",
+    "password": "Your password",
+    "emptyPassword":"please enter your password",
+    "shortPassword": "Your password should be longer",
+    "noSpecificChatacters": "Your password should contain specific characters",
+    "signUp": "sign up!",
+    "login": "login!",
+    "logout": "logout!",
+    "videoChat": "Start a videochat",
+    "waitingHost": "Waiting for a host to join",
+    "host": "Host",
+    "audience": "Audience",
+    "joinMe": "Join me",
+    "joinButton": "Join",
+    "leaveButton":"Leave"
+
+}

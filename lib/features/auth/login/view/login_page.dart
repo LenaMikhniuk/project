@@ -1,10 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:this_is_project/components/dimens/app_dimens.dart';
 import 'package:this_is_project/domain/repositories/auth/auth.dart';
-import 'package:this_is_project/features/common_widgets/auth_form.dart';
-
-import '../../../features.dart';
+import 'package:this_is_project/components/common_widgets/auth_form.dart';
+import 'package:this_is_project/features/features.dart';
+import 'package:this_is_project/translations/locale_keys.g.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -36,35 +38,36 @@ class AuthPageView extends StatelessWidget {
       builder: (context, state) {
         if (state.status == Status.inital) {
           return Scaffold(
-            backgroundColor: Colors.blue.shade50,
             body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: AppDimens.m),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AuthForm(
-                    label: 'Enter a username',
+                    label: LocaleKeys.username.tr(),
                     onChanged: (value) {
                       context.read<LoginPageCubit>().onNameChanged(value);
                     },
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppDimens.m),
                   AuthForm(
-                    label: 'Enter your password',
+                    label: LocaleKeys.password.tr(),
                     onChanged: (value) {
                       context.read<LoginPageCubit>().onPasswordChanged(value);
                     },
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: AppDimens.xl),
                   ElevatedButton(
                     onPressed: () {
                       context.read<LoginPageCubit>().login();
                     },
-                    child: const Text('Login!'),
+                    child: state.status == Status.loading
+                        ? const CircularProgressIndicator()
+                        : Text(LocaleKeys.login.tr()),
                   ),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: AppDimens.xl),
                   TextButton(
-                    child: Text('Sign up'.toUpperCase()),
+                    child: Text(LocaleKeys.signUp.tr().toUpperCase()),
                     onPressed: () => context.push('/register'),
                   )
                 ],

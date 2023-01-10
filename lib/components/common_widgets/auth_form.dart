@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:this_is_project/components/colors/app_colors.dart';
+import 'package:this_is_project/components/dimens/app_dimens.dart';
 
 class AuthForm extends StatelessWidget {
   final String label;
   final void Function(String)? onChanged;
-  final TextStyle? style;
   final bool obscureText;
   final Widget? suffixIcon;
   final String? Function(String?)? validator;
@@ -11,7 +12,6 @@ class AuthForm extends StatelessWidget {
   const AuthForm({
     required this.label,
     required this.onChanged,
-    this.style,
     this.obscureText = false,
     this.suffixIcon,
     this.validator,
@@ -21,6 +21,7 @@ class AuthForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: AppColors.prymaryTextColor,
       validator: validator,
       obscureText: obscureText,
       onChanged: onChanged,
@@ -28,11 +29,20 @@ class AuthForm extends StatelessWidget {
         suffixIcon: suffixIcon,
         label: Text(
           label,
-          style: style,
+          style: const TextStyle(color: AppColors.prymaryTextColor),
         ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
+        enabledBorder: _getBorderDecoration(AppColors.textFormFieldBorderColor),
+        focusedBorder: _getBorderDecoration(AppColors.textFormFieldFocusedBorderColor),
+      ),
+    );
+  }
+
+  OutlineInputBorder _getBorderDecoration(Color color) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(AppDimens.sm),
+      borderSide: BorderSide(
+        color: color,
+        width: AppDimens.xxs,
       ),
     );
   }
