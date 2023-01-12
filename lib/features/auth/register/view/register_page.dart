@@ -41,7 +41,7 @@ class RegisterPageContent extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: AppColors.scaffoldBackgroundColor,
-            elevation: 0,
+            elevation: AppDimens.zero,
             leading: const BackButton(color: AppColors.buttonColor),
           ),
           body: Padding(

@@ -16,7 +16,7 @@ void main() async {
         Locale('en'),
         Locale('pl'),
       ],
-      path: 'assets/translations/',
+      path: 'assets/translations',
       fallbackLocale: const Locale('en'),
       child: const MyApp(),
     ),
@@ -29,30 +29,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthCubit(authRepoInstance: MockAuthRepositoryImpl2()),
-      child: Builder(builder: (context) {
-        return BlocListener<AuthCubit, AuthState>(
-          listener: (context, state) {
-            if (state.status == AuthStatus.initial) {
-              goRouter.go(SplashScreen.path);
-            } else if (state.status == AuthStatus.unauthenticated) {
-              goRouter.go(LoginPage.path);
-            } else {
-              goRouter.go(HomePage.path);
-            }
-          },
-          child: MaterialApp.router(
-            routerConfig: goRouter,
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            theme: ThemeData(
-              textTheme: GoogleFonts.fjallaOneTextTheme(),
-              scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
-            ),
+      create: (context) => AuthCubit(authRepoInstance: MockAuthRepositoryImpl()),
+      child: BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state.status == AuthStatus.initial) {
+            goRouter.go(SplashScreen.path);
+          } else if (state.status == AuthStatus.unauthenticated) {
+            goRouter.go(LoginPage.path);
+          } else {
+            goRouter.go(HomePage.path);
+          }
+        },
+        child: MaterialApp.router(
+          routerConfig: goRouter,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          theme: ThemeData(
+            textTheme: GoogleFonts.fjallaOneTextTheme(),
+            scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
           ),
-        );
-      }),
+        ),
+      ),
     );
   }
 }
