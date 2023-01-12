@@ -1,21 +1,27 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:this_is_project/domain/repositories/auth/auth.dart';
+import 'package:this_is_project/features/auth/auth.dart';
+import 'package:this_is_project/features/auth/domain/repositories/auth_repository.dart';
 
 part 'login_page_state.dart';
 
 class LoginPageCubit extends Cubit<LoginPageState> {
-  final Auth _authImpl;
+  LoginPageCubit({
+    required this.authRepository,
+    required this.authCubit,
+  }) : super(LoginPageState.initial());
 
-  LoginPageCubit(this._authImpl) : super(LoginPageState.initial());
+  final AuthRepositoryAbstract authRepository;
+  final AuthCubit authCubit;
 
   Future<void> login() async {
-    const storage = FlutterSecureStorage();
-
     try {
-      final token = await _authImpl.login(name: state.name, password: state.password);
-      storage.write(key: 'user_token', value: token);
+      emit(LoginPageState.loading());
+      final token = await authRepository.login(
+        name: state.name,
+        password: state.password,
+      );
+      authCubit.authenticate(token);
       emit(LoginPageState.success());
     } catch (_) {
       emit(LoginPageState.error());
@@ -28,15 +34,5 @@ class LoginPageCubit extends Cubit<LoginPageState> {
 
   void onPasswordChanged(String value) {
     emit(state.copyWith(password: value));
-  }
-
-  Future<void> logout() async {
-    const storage = FlutterSecureStorage();
-    try {
-      await _authImpl.logOut();
-      storage.delete(key: 'user_token');
-    } catch (_) {
-      emit(LoginPageState.error());
-    }
   }
 }

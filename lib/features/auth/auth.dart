@@ -1,1 +1,3 @@
-export './cubit/auth_cubit.dart';
+export './auth/auth.dart';
+export './login/login.dart';
+export './register/register.dart';

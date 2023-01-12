@@ -2,8 +2,8 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:this_is_project/components/colors/app_colors.dart';
-import 'package:this_is_project/components/dimens/app_dimens.dart';
+import 'package:this_is_project/widgets/colors/app_colors.dart';
+import 'package:this_is_project/widgets/dimens/app_dimens.dart';
 import 'package:this_is_project/translations/locale_keys.g.dart';
 
 const _appId = 'b29024b093a14dcaaa186c017e5f1780';
@@ -14,6 +14,7 @@ const _channelName = 'channelfirst';
 const _containerHeight = 240.0;
 
 class ChatPage extends StatefulWidget {
+  static const path = 'chatPage';
   const ChatPage({super.key});
 
   @override

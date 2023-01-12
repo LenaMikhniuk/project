@@ -1,40 +1,38 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:this_is_project/features/auth/cubit/auth_cubit.dart';
 import 'package:go_router/go_router.dart';
+import 'package:this_is_project/features/features.dart';
 import 'package:this_is_project/translations/locale_keys.g.dart';
+import 'package:this_is_project/widgets/dimens/app_dimens.dart';
 
 class HomePage extends StatelessWidget {
+  static const path = '/home';
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<AuthCubit, AuthState>(
-        listener: (context, state) {
-          if (state.status == AuthStatus.logout) {
-            context.go('/auth');
-          } else if (state.status == AuthStatus.loading) {
-            CircularProgressIndicator();
-          }
-        },
-        builder: (context, state) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(AppDimens.s),
+            child: FractionallySizedBox(
+              widthFactor: AppDimens.buttonWidthFactor,
+              child: ElevatedButton(
                 child: Text(LocaleKeys.logout.tr()),
                 onPressed: () => context.read<AuthCubit>().logout(),
               ),
-              const SizedBox(height: 40),
-              TextButton(
-                onPressed: () => context.push('/videoChat'),
-                child: Text(LocaleKeys.videoChat.tr()),
-              ),
-            ],
-          );
-        },
+            ),
+          ),
+          const SizedBox(height: AppDimens.xl),
+          TextButton(
+            onPressed: () => context.pushNamed(ChatPage.path),
+            child: Text(LocaleKeys.videoChat.tr()),
+          ),
+        ],
       ),
     );
   }

@@ -1,17 +1,27 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:this_is_project/domain/repositories/register/register.dart';
+import 'package:this_is_project/features/auth/domain/repositories/auth_repository.dart';
+import 'package:this_is_project/features/features.dart';
 
 part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
-  final Register _register;
+  RegisterCubit({
+    required this.repository,
+    required this.authcubit,
+  }) : super(RegisterState.initial());
 
-  RegisterCubit(this._register) : super(RegisterState.initial());
+  final AuthRepositoryAbstract repository;
+  final AuthCubit authcubit;
 
   Future<void> registerUser() async {
     try {
-      await _register.registerUser(state.name, state.password);
+      emit(RegisterState.loading());
+      final user = await repository.registerUser(
+        state.name,
+        state.password,
+      );
+      authcubit.authenticate(user.id);
       emit(RegisterState.success());
     } catch (e) {
       emit(RegisterState.error());

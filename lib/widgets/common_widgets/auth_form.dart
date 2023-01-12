@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:this_is_project/components/colors/app_colors.dart';
-import 'package:this_is_project/components/dimens/app_dimens.dart';
+import 'package:this_is_project/widgets/colors/app_colors.dart';
+import 'package:this_is_project/widgets/dimens/app_dimens.dart';
 
 class AuthForm extends StatelessWidget {
   final String label;

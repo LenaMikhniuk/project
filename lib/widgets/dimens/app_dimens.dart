@@ -2,6 +2,8 @@ class AppDimens {
   ///0.0
   static const zero = 0.0;
 
+  static const buttonWidthFactor = 0.5;
+
   ///1.0
   static const one = 1.0;
 
