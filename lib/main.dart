@@ -5,7 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:this_is_project/features/features.dart';
 import 'package:this_is_project/features/router/main_router.dart';
 import 'package:this_is_project/widgets/colors/app_colors.dart';
-import 'package:this_is_project/features/auth/domain/repositories/auth_repository.dart';
+
+import 'features/auth/domain/repositories/auth_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
