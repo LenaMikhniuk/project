@@ -12,10 +12,10 @@ The project is in progress...
 
 ## Technologies info
 In this project, I am using the following: 
-* Bloc pattern with flutter_bloc
+* Bloc pattern with the flutter_bloc library
 * Locale translations using easy_localization
 * Navigatiion with the Go_router package
-* The videchat with the agora_rtc_engine package
+* Videochat with the agora_rtc_engine package
 
 
 ## Setup
