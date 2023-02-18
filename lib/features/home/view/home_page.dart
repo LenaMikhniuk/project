@@ -12,28 +12,37 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(AppDimens.s),
-            child: FractionallySizedBox(
-              widthFactor: AppDimens.buttonWidthFactor,
-              child: ElevatedButton(
-                child: Text(LocaleKeys.logout.tr()),
-                onPressed: () => context.read<AuthCubit>().logout(),
+    return BlocConsumer<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state.status == AuthStatus.unauthenticated) {
+          context.go(LoginPage.path);
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(AppDimens.s),
+                child: FractionallySizedBox(
+                  widthFactor: AppDimens.buttonWidthFactor,
+                  child: ElevatedButton(
+                    onPressed: context.read<AuthCubit>().logout,
+                    child: Text(LocaleKeys.logout.tr()),
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(height: AppDimens.xl),
+              TextButton(
+                onPressed: () => context.pushNamed(ChatPage.path),
+                child: Text(LocaleKeys.videoChat.tr()),
+              ),
+            ],
           ),
-          const SizedBox(height: AppDimens.xl),
-          TextButton(
-            onPressed: () => context.pushNamed(ChatPage.path),
-            child: Text(LocaleKeys.videoChat.tr()),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

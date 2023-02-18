@@ -9,22 +9,22 @@ class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit({
     required this.repository,
     required this.authcubit,
-  }) : super(RegisterState.initial());
+  }) : super(const RegisterState(RegisterStateStatus.inital));
 
   final AuthRepositoryAbstract repository;
   final AuthCubit authcubit;
 
   Future<void> registerUser() async {
     try {
-      emit(RegisterState.loading());
-      final user = await repository.registerUser(
+      emit(state.copyWith(status: RegisterStateStatus.loading));
+      repository.registerUser(
         state.name,
         state.password,
       );
-      authcubit.authenticate(user.id);
-      emit(RegisterState.success());
+      emit(state.copyWith(status: RegisterStateStatus.success));
     } catch (e) {
-      emit(RegisterState.error());
+      emit(state.copyWith(status: RegisterStateStatus.error));
+      emit(state.copyWith(status: RegisterStateStatus.idle));
     }
   }
 

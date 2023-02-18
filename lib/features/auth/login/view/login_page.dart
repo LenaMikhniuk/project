@@ -15,21 +15,36 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginPageCubit(
-        authRepository: MockAuthRepositoryImpl(),
-        authCubit: context.read<AuthCubit>(),
-      ),
-      child: const LoginPageView(),
-    );
+        create: (context) => LoginPageCubit(
+              authRepository: MockAuthRepositoryImpl(),
+              authCubit: context.read<AuthCubit>(),
+            ),
+        child: const LoginPageView());
   }
 }
 
-class LoginPageView extends StatelessWidget {
+class LoginPageView extends StatefulWidget {
   const LoginPageView({super.key});
 
   @override
+  State<LoginPageView> createState() => _LoginPageViewState();
+}
+
+class _LoginPageViewState extends State<LoginPageView> {
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginPageCubit, LoginPageState>(
+    return BlocConsumer<LoginPageCubit, LoginPageState>(
+      listener: (context, state) {
+        if (state.status == Status.error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                state.error.toString(),
+              ),
+            ),
+          );
+        }
+      },
       builder: (context, state) {
         return Scaffold(
           body: Padding(

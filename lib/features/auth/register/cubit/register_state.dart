@@ -2,40 +2,20 @@ part of 'register_cubit.dart';
 
 enum RegisterStateStatus {
   inital,
+  idle,
   loading,
-  loaded,
   success,
   error,
   validationError,
 }
 
 class RegisterState extends Equatable {
-  const RegisterState._(
+  const RegisterState(
     this.status, {
     this.name = '',
     this.password = '',
     this.hidePassword = true,
   });
-
-  factory RegisterState.initial() {
-    return const RegisterState._(RegisterStateStatus.inital);
-  }
-  factory RegisterState.loading() {
-    return const RegisterState._(RegisterStateStatus.loading);
-  }
-  factory RegisterState.success() {
-    return const RegisterState._(RegisterStateStatus.success);
-  }
-  factory RegisterState.loaded() {
-    return const RegisterState._(RegisterStateStatus.success);
-  }
-
-  factory RegisterState.error() {
-    return const RegisterState._(RegisterStateStatus.error);
-  }
-  factory RegisterState.validationError() {
-    return const RegisterState._(RegisterStateStatus.validationError);
-  }
 
   final RegisterStateStatus status;
   final String name;
@@ -56,7 +36,7 @@ class RegisterState extends Equatable {
     String? password,
     bool? hidePassword,
   }) {
-    return RegisterState._(
+    return RegisterState(
       status ?? this.status,
       name: name ?? this.name,
       password: password ?? this.password,

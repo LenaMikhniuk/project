@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:this_is_project/features/auth/domain/repositories/auth_repository.dart';
 import 'package:this_is_project/widgets/colors/app_colors.dart';
 import 'package:this_is_project/widgets/dimens/app_dimens.dart';
@@ -36,7 +37,12 @@ class RegisterPageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final verticalPadding = MediaQuery.of(context).size.width / 2;
 
-    return BlocBuilder<RegisterCubit, RegisterState>(
+    return BlocConsumer<RegisterCubit, RegisterState>(
+      listener: (context, state) {
+        if (state.status == RegisterStateStatus.success) {
+          context.go(HomePage.path);
+        }
+      },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
@@ -59,17 +65,18 @@ class RegisterPageContent extends StatelessWidget {
                 Form(
                   key: _formKey,
                   child: AuthForm(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return LocaleKeys.emptyPassword.tr();
-                      } else if (value.length < _minPasswordLenght) {
-                        return LocaleKeys.shortPassword.tr();
-                      } else if (!_containsMandatoryCharacters(value)) {
-                        return LocaleKeys.noSpecificChatacters.tr();
-                      } else {
-                        return null;
-                      }
-                    },
+                    //TODO: add firebase validation
+                    // validator: (value) {
+                    //   if (value == null || value.isEmpty) {
+                    //     return LocaleKeys.emptyPassword.tr();
+                    //   } else if (value.length < _minPasswordLenght) {
+                    //     return LocaleKeys.shortPassword.tr();
+                    //   } else if (!_containsMandatoryCharacters(value)) {
+                    //     return LocaleKeys.noSpecificChatacters.tr();
+                    //   } else {
+                    //     return null;
+                    //   }
+                    // },
                     label: LocaleKeys.password.tr().toUpperCase(),
                     onChanged: (value) => context.read<RegisterCubit>().onPasswordChanged(value),
                     obscureText: state.hidePassword,
