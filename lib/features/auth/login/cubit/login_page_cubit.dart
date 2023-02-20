@@ -9,7 +9,7 @@ class LoginPageCubit extends Cubit<LoginPageState> {
   LoginPageCubit({
     required this.authRepository,
     required this.authCubit,
-  }) : super(const LoginPageState(Status.inital));
+  }) : super(const LoginPageState());
 
   final AuthRepositoryAbstract authRepository;
   final AuthCubit authCubit;
