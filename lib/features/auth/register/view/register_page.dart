@@ -78,7 +78,7 @@ class RegisterPageContent extends StatelessWidget {
                     //   }
                     // },
                     label: LocaleKeys.password.tr().toUpperCase(),
-                    onChanged: (value) => context.read<RegisterCubit>().onPasswordChanged(value),
+                    onChanged: context.read<RegisterCubit>().onPasswordChanged,
                     obscureText: state.hidePassword,
                     suffixIcon: IconButton(
                       color: AppColors.prymaryTextColor,
