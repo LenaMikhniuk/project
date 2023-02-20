@@ -23,12 +23,11 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> authenticate(String token) async {
-    const storage = FlutterSecureStorage();
-    await storage.write(key: 'user_token', value: token);
+  Future<void> authenticate() async {
     emit(AuthState.authenticated());
   }
 
+//TODO: check if authenticated with Firebase
   Future<void> isAuthenticated() async {
     await Future.delayed(const Duration(seconds: 2));
     const storage = FlutterSecureStorage();

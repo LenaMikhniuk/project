@@ -1,27 +1,30 @@
-import 'package:this_is_project/features/auth/domain/models/models.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthRepositoryAbstract {
-  Future<String> login({required String name, required String password});
-  Future<bool> logOut();
-  Future<User> registerUser(String userName, String password);
+  Future<void> login({required String email, required String password});
+  Future<void> logOut();
+  Future<void> registerUser(String email, String password);
 }
 
-class MockAuthRepositoryImpl implements AuthRepositoryAbstract {
+class AuthRepositoryFirebase implements AuthRepositoryAbstract {
   @override
-  Future<bool> logOut() async {
-    await Future.delayed(const Duration(milliseconds: 400));
-    return true;
+  Future<void> logOut() async {
+    await FirebaseAuth.instance.signOut();
   }
 
   @override
-  Future<String> login({required String name, required String password}) async {
-    await Future.delayed(const Duration(seconds: 2));
-    return 'token_abc_1234';
+  Future<void> login({required String email, required String password}) async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
   }
 
   @override
-  Future<User> registerUser(String userName, String password) async {
-    await Future.delayed(const Duration(seconds: 2));
-    return User(name: userName, id: '123', password: password);
+  Future<void> registerUser(String email, String password) async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
   }
 }

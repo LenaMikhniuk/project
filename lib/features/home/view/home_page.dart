@@ -12,28 +12,32 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(AppDimens.s),
-            child: FractionallySizedBox(
-              widthFactor: AppDimens.buttonWidthFactor,
-              child: ElevatedButton(
-                child: Text(LocaleKeys.logout.tr()),
-                onPressed: () => context.read<AuthCubit>().logout(),
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        return Scaffold(
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(AppDimens.s),
+                child: FractionallySizedBox(
+                  widthFactor: AppDimens.buttonWidthFactor,
+                  child: ElevatedButton(
+                    onPressed: context.read<AuthCubit>().logout,
+                    child: Text(LocaleKeys.logout.tr()),
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(height: AppDimens.xl),
+              TextButton(
+                onPressed: () => context.pushNamed(ChatPage.path),
+                child: Text(LocaleKeys.videoChat.tr()),
+              ),
+            ],
           ),
-          const SizedBox(height: AppDimens.xl),
-          TextButton(
-            onPressed: () => context.pushNamed(ChatPage.path),
-            child: Text(LocaleKeys.videoChat.tr()),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

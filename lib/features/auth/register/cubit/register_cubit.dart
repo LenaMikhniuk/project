@@ -8,23 +8,24 @@ part 'register_state.dart';
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit({
     required this.repository,
-    required this.authcubit,
-  }) : super(RegisterState.initial());
+    required this.authCubit,
+  }) : super(const RegisterState());
 
   final AuthRepositoryAbstract repository;
-  final AuthCubit authcubit;
+  final AuthCubit authCubit;
 
   Future<void> registerUser() async {
     try {
-      emit(RegisterState.loading());
-      final user = await repository.registerUser(
+      emit(state.copyWith(status: RegisterStateStatus.loading));
+      repository.registerUser(
         state.name,
         state.password,
       );
-      authcubit.authenticate(user.id);
-      emit(RegisterState.success());
+      await authCubit.authenticate();
+      emit(state.copyWith(status: RegisterStateStatus.success));
     } catch (e) {
-      emit(RegisterState.error());
+      emit(state.copyWith(status: RegisterStateStatus.error));
+      emit(state.copyWith(status: RegisterStateStatus.idle));
     }
   }
 

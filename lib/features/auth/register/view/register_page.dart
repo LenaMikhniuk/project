@@ -19,8 +19,8 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => RegisterCubit(
-        repository: MockAuthRepositoryImpl(),
-        authcubit: context.read<AuthCubit>(),
+        repository: AuthRepositoryFirebase(),
+        authCubit: context.read<AuthCubit>(),
       ),
       child: RegisterPageContent(),
     );
@@ -59,19 +59,20 @@ class RegisterPageContent extends StatelessWidget {
                 Form(
                   key: _formKey,
                   child: AuthForm(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return LocaleKeys.emptyPassword.tr();
-                      } else if (value.length < _minPasswordLenght) {
-                        return LocaleKeys.shortPassword.tr();
-                      } else if (!_containsMandatoryCharacters(value)) {
-                        return LocaleKeys.noSpecificChatacters.tr();
-                      } else {
-                        return null;
-                      }
-                    },
+                    //TODO: add firebase validation
+                    // validator: (value) {
+                    //   if (value == null || value.isEmpty) {
+                    //     return LocaleKeys.emptyPassword.tr();
+                    //   } else if (value.length < _minPasswordLenght) {
+                    //     return LocaleKeys.shortPassword.tr();
+                    //   } else if (!_containsMandatoryCharacters(value)) {
+                    //     return LocaleKeys.noSpecificChatacters.tr();
+                    //   } else {
+                    //     return null;
+                    //   }
+                    // },
                     label: LocaleKeys.password.tr().toUpperCase(),
-                    onChanged: (value) => context.read<RegisterCubit>().onPasswordChanged(value),
+                    onChanged: context.read<RegisterCubit>().onPasswordChanged,
                     obscureText: state.hidePassword,
                     suffixIcon: IconButton(
                       color: AppColors.prymaryTextColor,

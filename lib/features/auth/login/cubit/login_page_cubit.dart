@@ -9,22 +9,24 @@ class LoginPageCubit extends Cubit<LoginPageState> {
   LoginPageCubit({
     required this.authRepository,
     required this.authCubit,
-  }) : super(LoginPageState.initial());
+  }) : super(const LoginPageState());
 
   final AuthRepositoryAbstract authRepository;
   final AuthCubit authCubit;
 
   Future<void> login() async {
     try {
-      emit(LoginPageState.loading());
-      final token = await authRepository.login(
-        name: state.name,
+      emit(state.copyWith(status: Status.loading));
+      await authRepository.login(
+        email: state.name,
         password: state.password,
       );
-      authCubit.authenticate(token);
-      emit(LoginPageState.success());
-    } catch (_) {
-      emit(LoginPageState.error());
+
+      await authCubit.authenticate();
+      emit(state.copyWith(status: Status.success));
+    } catch (e) {
+      emit(state.copyWith(status: Status.error, error: e));
+      emit(state.copyWith(status: Status.idle));
     }
   }
 
