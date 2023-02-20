@@ -1,7 +1,6 @@
 part of 'login_page_cubit.dart';
 
 enum Status {
-  inital,
   idle,
   loading,
   success,
@@ -9,8 +8,8 @@ enum Status {
 }
 
 class LoginPageState extends Equatable {
-  const LoginPageState(
-    this.status = State.initial, {
+  const LoginPageState({
+    this.status = Status.idle,
     this.name = '',
     this.password = '',
     this.error,
@@ -36,7 +35,7 @@ class LoginPageState extends Equatable {
     Object? error,
   }) {
     return LoginPageState(
-      status ?? this.status,
+      status: status ?? this.status,
       name: name ?? this.name,
       password: password ?? this.password,
       error: error ?? this.error,

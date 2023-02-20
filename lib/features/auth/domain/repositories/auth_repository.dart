@@ -10,8 +10,6 @@ class AuthRepositoryFirebase implements AuthRepositoryAbstract {
   @override
   Future<void> logOut() async {
     await FirebaseAuth.instance.signOut();
-    // await Future.delayed(const Duration(milliseconds: 400));
-    // return true;
   }
 
   @override

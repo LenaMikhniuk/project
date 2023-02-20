@@ -1,7 +1,6 @@
 part of 'register_cubit.dart';
 
 enum RegisterStateStatus {
-  inital,
   idle,
   loading,
   success,
@@ -10,8 +9,8 @@ enum RegisterStateStatus {
 }
 
 class RegisterState extends Equatable {
-  const RegisterState(
-    this.status, {
+  const RegisterState({
+    this.status = RegisterStateStatus.idle,
     this.name = '',
     this.password = '',
     this.hidePassword = true,
@@ -37,7 +36,7 @@ class RegisterState extends Equatable {
     bool? hidePassword,
   }) {
     return RegisterState(
-      status ?? this.status,
+      status: status ?? this.status,
       name: name ?? this.name,
       password: password ?? this.password,
       hidePassword: hidePassword ?? this.hidePassword,

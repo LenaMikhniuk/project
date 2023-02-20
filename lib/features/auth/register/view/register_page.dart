@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:this_is_project/features/auth/domain/repositories/auth_repository.dart';
 import 'package:this_is_project/widgets/colors/app_colors.dart';
 import 'package:this_is_project/widgets/dimens/app_dimens.dart';
@@ -20,8 +19,8 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => RegisterCubit(
-        repository: MockAuthRepositoryImpl(),
-        authcubit: context.read<AuthCubit>(),
+        repository: AuthRepositoryFirebase(),
+        authCubit: context.read<AuthCubit>(),
       ),
       child: RegisterPageContent(),
     );
@@ -37,12 +36,7 @@ class RegisterPageContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final verticalPadding = MediaQuery.of(context).size.width / 2;
 
-    return BlocConsumer<RegisterCubit, RegisterState>(
-      listener: (context, state) {
-        if (state.status == RegisterStateStatus.success) {
-          context.go(HomePage.path);
-        }
-      },
+    return BlocBuilder<RegisterCubit, RegisterState>(
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(

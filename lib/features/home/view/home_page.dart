@@ -12,12 +12,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit, AuthState>(
-      listener: (context, state) {
-        if (state.status == AuthStatus.unauthenticated) {
-          context.go(LoginPage.path);
-        }
-      },
+    return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
         return Scaffold(
           body: Column(

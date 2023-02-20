@@ -16,21 +16,16 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) => LoginPageCubit(
-              authRepository: MockAuthRepositoryImpl(),
+              authRepository: AuthRepositoryFirebase(),
               authCubit: context.read<AuthCubit>(),
             ),
         child: const LoginPageView());
   }
 }
 
-class LoginPageView extends StatefulWidget {
+class LoginPageView extends StatelessWidget {
   const LoginPageView({super.key});
 
-  @override
-  State<LoginPageView> createState() => _LoginPageViewState();
-}
-
-class _LoginPageViewState extends State<LoginPageView> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoginPageCubit, LoginPageState>(

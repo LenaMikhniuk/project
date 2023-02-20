@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthCubit(authRepoInstance: MockAuthRepositoryImpl()),
+      create: (context) => AuthCubit(authRepoInstance: AuthRepositoryFirebase()),
       child: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state.status == AuthStatus.initial) {
