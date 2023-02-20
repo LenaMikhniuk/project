@@ -10,7 +10,7 @@ enum Status {
 
 class LoginPageState extends Equatable {
   const LoginPageState(
-    this.status, {
+    this.status = State.initial, {
     this.name = '',
     this.password = '',
     this.error,
