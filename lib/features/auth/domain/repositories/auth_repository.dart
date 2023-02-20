@@ -6,7 +6,7 @@ abstract class AuthRepositoryAbstract {
   Future<void> registerUser(String email, String password);
 }
 
-class MockAuthRepositoryImpl implements AuthRepositoryAbstract {
+class AuthRepositoryFirebase implements AuthRepositoryAbstract {
   @override
   Future<void> logOut() async {
     await FirebaseAuth.instance.signOut();
